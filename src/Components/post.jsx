@@ -19,7 +19,7 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import {getUserPost, createPost, getFeedImage} from '../rtk/reducers/postReducer'
+import {getUserPost, createPost} from '../rtk/reducers/postReducer'
 import Checkbox from '@mui/material/Checkbox';
 
 function Posts() {
@@ -33,7 +33,7 @@ function Posts() {
     const [open, setOpen] = useState(false);
     const [isPrivate, setIsPrivate] = useState(true);
     const [postData, setPostData] = useState({});
-    const [base64, setBase64] = useState();
+    const [base64Image, setBase64Image] = useState('');
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -41,17 +41,11 @@ function Posts() {
         return state.post.userPosts
     })
 
-    console.log('userPosts===',userPosts)
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!postData.isPrivate) {
             postData['isPrivate'] = isPrivate;
         }
-        if (postData.filePath) {
-            postData['filePath'] = base64;
-        }
-        console.log('postData===',postData)
         dispatch(createPost(postData))
         handleClose()
     }
@@ -61,16 +55,15 @@ function Posts() {
             let file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = _handleReaderLoaded
-                reader.readAsBinaryString(file)
+                reader.onloadend = () => {
+                    setBase64Image(reader.result);
+                };
+                reader.readAsDataURL(file);
             }
+            setPostData({...postData, [e.target.id]: base64Image})
+        } else {
+            setPostData({...postData, [e.target.id]: e.target.value})
         }
-        setPostData({...postData, [e.target.id]: e.target.value})
-    }
-
-    const _handleReaderLoaded = (readerEvt) => {
-        let binaryString = readerEvt.target.result;
-        setBase64(btoa(binaryString))
     }
 
     const style = {

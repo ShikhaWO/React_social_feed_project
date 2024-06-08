@@ -67,69 +67,6 @@ const AuthReducer = createSlice({
             state.user = [];
             state.error = action.error.message;
         });
-
-        // [createTour.pending]: (state, action) => {
-        //     state.loading = true;
-        // },
-        //     [createTour.fulfilled]: (state, action) => {
-        //     state.loading = false;
-        //     state.tours = [action.payload];
-        // },
-        //     [createTour.rejected]: (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.payload.message;
-        // },
-        //     [getToursByUser.pending]: (state, action) => {
-        //     state.loading = true;
-        // },
-        //     [getToursByUser.fulfilled]: (state, action) => {
-        //     state.loading = false;
-        //     state.userTours = action.payload;
-        // },
-        //     [getToursByUser.rejected]: (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.payload.message;
-        // },
-        //
-        //     [updateTour.pending]: (state, action) => {
-        //     state.loading = true;
-        // },
-        //     [updateTour.fulfilled]: (state, action) => {
-        //     state.loading = false;
-        //     const {
-        //         arg: { id },
-        //     } = action.meta;
-        //     if (id) {
-        //         state.userTours = state.userTours.map((item) =>
-        //             item._id === id ? action.payload : item
-        //         );
-        //         state.tours = state.tours.map((item) =>
-        //             item._id === id ? action.payload : item
-        //         );
-        //     }
-        // },
-        //     [updateTour.rejected]: (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.payload.message;
-        // }
-        //     ,
-        //     [deleteTour.pending]: (state, action) => {
-        //     state.loading = true;
-        // },
-        //     [deleteTour.fulfilled]: (state, action) => {
-        //     state.loading = false;
-        //     const {
-        //         arg: { id },
-        //     } = action.meta;
-        //     if (id) {
-        //         state.userTours = state.userTours.filter((item) => item._id !== id);
-        //         state.tours = state.tours.filter((item) => item._id !== id);
-        //     }
-        // },
-        //     [deleteTour.rejected]: (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.payload.message;
-        // },
     },
 });
 

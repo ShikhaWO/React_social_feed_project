@@ -6,7 +6,6 @@ const initialState = {
     posts: [],
     userPosts: [],
     error: "",
-    feedImage: {}
 };
 
 export const getFeedPost = createAsyncThunk(
@@ -45,19 +44,6 @@ export const getUserPost = createAsyncThunk(
     }
 );
 
-export const getFeedImage = createAsyncThunk(
-    "posts/get-feed-image",
-    async (postId, { rejectWithValue}) => {
-        try {
-            const response = await axiosInstance.get(`http://localhost:5000/posts/get-feed-image/${postId}`);
-            console.log('response===',response)
-            return response.data.data;
-        } catch (err) {
-            return rejectWithValue(err.response.data);
-        }
-    }
-);
-
 const PostReducer = createSlice({
     name: "post",
     initialState,
@@ -79,14 +65,13 @@ const PostReducer = createSlice({
             state.loader = true;
         });
         builder.addCase(createPost.fulfilled, (state, action) => {
-            console.log('action.payload====',action.payload)
             state.loader = false;
             state.posts = [...state.posts,action?.payload];
+            state.userPosts = [...state.userPosts,action.payload];
             state.error = "";
         });
         builder.addCase(createPost.rejected, (state, action) => {
             state.loader = false;
-            state.posts = [];
             state.error = action.error.message;
         });
         builder.addCase(getUserPost.pending, (state) => {
@@ -100,20 +85,6 @@ const PostReducer = createSlice({
         builder.addCase(getUserPost.rejected, (state, action) => {
             state.loader = false;
             state.userPosts = [];
-            state.error = action.error.message;
-        });
-        builder.addCase(getFeedImage.pending, (state) => {
-            state.loader = true;
-        });
-        builder.addCase(getFeedImage.fulfilled, (state, action) => {
-            console.log('action.payload===',action?.payload)
-            state.loader = false;
-            state.feedImage = action.payload?.data;
-            state.error = "";
-        });
-        builder.addCase(getFeedImage.rejected, (state, action) => {
-            state.loader = false;
-            state.feedImage = [];
             state.error = action.error.message;
         });
     },

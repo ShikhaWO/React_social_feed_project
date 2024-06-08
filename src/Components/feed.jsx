@@ -44,7 +44,7 @@ function Feed() {
                         <CardMedia
                             component="img"
                             height="194"
-                            image={data?.image}
+                            image={data?.filePath}
                             alt="test Image"
                         />
                         <CardContent>
