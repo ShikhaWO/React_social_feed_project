@@ -26,4 +26,4 @@ yarn-error.log*
 .package-lock.json
 .idea
 
-/social-media-node
+social-media-node/
